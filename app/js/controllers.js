@@ -27,7 +27,7 @@ phonecatControllers.controller('PhoneSelCtrl',
     $scope.next = function(){
         
         var i = $scope.main_model.step;
-        window.location.assign(link[i].url);
+        window.location.assign(link[i].url+'/+1');
         $scope.main_model.step++;
     }
   });

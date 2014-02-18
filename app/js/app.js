@@ -15,15 +15,15 @@ phonecatApp.config(['$routeProvider',
         //templateUrl: 'partials/ena.html',
         controller: 'PhoneSelCtrl'
       }).
-      when('/ena', {
+      when('/ena/:step', {
         templateUrl: 'partials/ena.html',
         controller: 'PhoneEnaCtrl'
       }).
-      when('/dva', {
+      when('/dva/:step', {
         templateUrl: 'partials/dva.html',
         controller: 'PhoneDvaCtrl'
       }).
-      when('/tri', {
+      when('/tri/:step', {
         templateUrl: 'partials/tri.html',
         controller: 'PhoneTriCtrl'
       }).
