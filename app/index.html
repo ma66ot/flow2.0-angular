@@ -2,17 +2,21 @@
 <html lang="en" ng-app="phonecatApp">
 <head>
   <meta charset="utf-8">
-  <title>Google Phone Gallery</title>
+  <title>Testing angular how good it realy is :)</title>
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-route.js"></script>
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
 </head>
-<body>
-
-  <div ng-view></div>
-
+<body ng-controller="PhoneSelCtrl" ng-model="main_model">
+    <h1>Multistep form</h1>
+    <h2>{{main_model.step}}</h2>
+    Prev step:{{main_model.step-1}}, Next step: {{main_model.step}} <br />
+    <a href="javascript: void(0)" ng-click="back()">Prev step</a><a href="javascript: void(0)" ng-click="next()">Next step</a> <br />
+    <a href="http://localhost:8000/app/index.html#/dva">druga</a>
+    <div ng-view></div>
 </body>
 </html>

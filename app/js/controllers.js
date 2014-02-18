@@ -2,18 +2,50 @@
 
 /* Controllers */
 
-var phonecatControllers = angular.module('phonecatControllers', []);
+var phonecatControllers = angular.module('phonecatControllers', [
+    'helpServices'
+]);
 
-phonecatControllers.controller('PhoneListCtrl', ['$scope', '$http',
-  function($scope, $http) {
-    $http.get('phones/phones.json').success(function(data) {
-      $scope.phones = data;
-    });
+phonecatControllers.controller('PhoneSelCtrl',
+  function($scope, order_sort) {
+      var selection = [
+       {'url':'#/ena','order':2,'title':'prva'},
+       {'url':'#/dva','order':1,'title':'druga'},
+       {'url':'#/tri','order':3,'title':'tretja'}
+   ];
+    var curr_step = 0;
+    
+    var link = order_sort.sort(selection);
+    
+    var main_model = {'step':curr_step, 'link':link};
+    $scope.main_model = main_model;
+    
+    $scope.back = function(){
+        $scope.main_model.step--;
+        window.history.back();
+    }
+    $scope.next = function(){
+        
+        var i = $scope.main_model.step;
+        window.location.assign(link[i].url);
+        $scope.main_model.step++;
+    }
+  });
 
-    $scope.orderProp = 'age';
-  }]);
+phonecatControllers.controller('PhoneEnaCtrl',
+  function($scope) {
+    
+    
+  });
 
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
-  function($scope, $routeParams) {
-    $scope.phoneId = $routeParams.phoneId;
-  }]);
+phonecatControllers.controller('PhoneDvaCtrl',
+  function($scope) {
+      
+    
+  });
+  
+phonecatControllers.controller('PhoneTriCtrl',
+  function($scope) {
+      
+    
+  });
