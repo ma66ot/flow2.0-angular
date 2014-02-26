@@ -1,22 +1,37 @@
 <!doctype html>
 <html lang="en" ng-app="phonecatApp">
-<head>
-  <meta charset="utf-8">
-  <title>Testing angular how good it realy is :)</title>
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular/angular-route.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script>
-</head>
-<body ng-controller="PhoneSelCtrl" ng-model="main_model">
-    <h1>Multistep form</h1>
-    <h2>{{main_model.step}}</h2>
-    Prev step:{{main_model.step-1}}, Next step: {{main_model.step}} <br />
-    <a href="javascript: void(0)" ng-click="back()">Prev step</a><a href="javascript: void(0)" ng-click="next()">Next step</a> <br />
-    <a href="http://localhost:8000/app/index.html#/dva">druga</a>
-    <div ng-view></div>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>Testing angular how good it realy is :)</title>
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular/angular-route.js"></script>
+        <script src="lib/angular/angular-cookies.js"></script>
+        <script src="lib/angular/angular-animate.js"></script>
+        <script src="lib/jquery/jquery-1.10.2.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/services.js"></script>
+    </head>
+    <body ng-controller="MainCtrl" ng-model="main_model">
+        <h2>Flow 2.0, Step: {{main_model.curr_step}}</h2>
+        <div ng-include src="'partials/heading.html'"></div>
+        <br />
+        <div class="contain" ng-controller="ProductSelCtrl">
+            <ul>
+                <li class="selection" ng-repeat="product in main_model.products | orderBy: product.order">
+                    <input type="checkbox" name="house" ng-click="add_remove(product, check_value);" ng-model="check_value" ng-init="check_value = check_state(product)"/>
+                    {{product.title}}
+                </li>
+            </ul>
+        </div>
+        <div class="form">
+            <div ng-view></div>
+        </div>
+        <br style="clear:both;"/>
+        <br />
+        <a href="javascript: void(0)" ng-click="change_step(-1, $location.path());">Prev step</a><a href="javascript: void(0)" ng-click="change_step(1, $location.path());">Next step</a> <br />
+        <div class="test"></div>
+    </body>
 </html>

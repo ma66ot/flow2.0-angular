@@ -4,10 +4,6 @@
 
 var helpServices = angular.module('helpServices',[]);
 
-helpServices.factory('link_next',function(){
-    return 'kaka';
-});
-
 helpServices.factory('order_sort',function(){
     return {
         sort: function(to_sort){
@@ -15,6 +11,25 @@ helpServices.factory('order_sort',function(){
                 return obj1.order - obj2.order;
             });
             return to_sort;
+        }
+    }
+});
+
+helpServices.factory('selection_check',function(){
+    return {
+        check: function(){
+            return true;
+        }
+    }
+});
+
+helpServices.factory('json_submit_builder',function(){
+    return {
+        build: function(){
+            return true;
+        },
+        delete: function(){
+            return true;
         }
     }
 });

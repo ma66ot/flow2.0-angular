@@ -21,3 +21,30 @@ body {
   height: 100px;
   padding-top: 15px;
 }
+.form{
+    float: left;
+    width: 700px;
+}
+.form input{
+    display: block;
+}
+.contain{
+    float:left;
+    width: 300px;
+}
+.heading ul{
+    list-style: none;
+}
+.heading ul li{
+    position: relative;
+    display: inline-block;
+    padding: 15px;
+    width: 200px;
+}
+.heading ul .step02 img{
+    position: absolute;
+    border-radius: 50%;
+}
+.heading li .selected{
+    background-color: #57a957;
+}

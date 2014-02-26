@@ -1,0 +1,30 @@
+<div class="heading">
+    <ul>
+        <li class="step01">
+            <span ng-if="main_model.curr_step == 0" class="selected">Selection</span>
+            <span ng-if="main_model.curr_step != 0">Selection</span>
+        </li>
+        <li class="step02">
+            <span ng-if="main_model.selection.length == 1">Selected products</span>
+            <div ng-repeat="selected in main_model.selection" ng-if="!$first">
+                <div ng-if="$index == main_model.curr_step">
+                    <a href="javascript: void(0)"><img src="{{selected.img}}" alt="" style="left:{{$index * 20}}px; z-index:1000" width="50" height="50"/></a>
+                </div>
+                <div ng-if="$index < main_model.curr_step">
+                    <a href="javascript: void(0)" ng-click="change_step($index - main_model.curr_step)"><img src="{{selected.img}}" alt="" style="left:{{$index * 20}}px; z-index:{{900 + $index}}" width="40" height="40"/></a>
+                </div>
+                <div ng-if="$index > main_model.curr_step">
+                    <a href="javascript: void(0)" ng-click="change_step($index - main_model.curr_step)"><img src="{{selected.img}}" alt="" style="left:{{$index * 20}}px; z-index:{{1000 - $index}}" width="40" height="40"/></a>
+                </div>
+            </div>
+        </li>
+        <li class="step03">
+            <span ng-if="main_model.curr_step == main_model.selection.length" class="selected">Personal</span>
+            <span ng-if="main_model.curr_step < main_model.selection.length">Personal</span>
+        </li>
+        <li class="step04">
+            <span ng-if="main_model.curr_step > main_model.selection.length" class="selected">Receipt</span>
+            <span ng-if="main_model.curr_step <= main_model.selection.length">Receipt</span>
+        </li>
+    </ul>
+</div>
