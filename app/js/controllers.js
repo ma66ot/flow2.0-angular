@@ -113,10 +113,11 @@ phonecatControllers.controller('PersonalCtrl',
         });
 
 phonecatControllers.controller('ReceiptCtrl',
-        function($scope, $location) {
+        function($scope, $location, json_submit_builder) {
             if ($scope.main_model.selection.length == 1) {
                 $location.path('/');
             }
+            json_submit_builder.delete_cookie();
             $scope.main_model.curr_step = 0;
             $scope.main_model.selection.splice(1);
         });
