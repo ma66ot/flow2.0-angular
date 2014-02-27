@@ -6,7 +6,7 @@
         </li>
         <li class="step02">
             <span ng-if="main_model.selection.length == 1">Selected products</span>
-            <div ng-repeat="selected in main_model.selection" ng-if="!$first">
+            <div ng-repeat="selected in main_model.selection" ng-if="!$first && selected.title != 'personal'">
                 <div ng-if="$index == main_model.curr_step">
                     <a href="javascript: void(0)"><img src="{{selected.img}}" alt="" style="left:{{$index * 20}}px; z-index:1000" width="50" height="50"/></a>
                 </div>
