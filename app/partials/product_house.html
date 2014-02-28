@@ -1,9 +1,8 @@
 <!-- House product template -->
 House
 <form name="/product_house">
-    <input type="text" name="product_house[name]" />
-    <input type="text" name="product_house[surname]" />
-    <input type="text" name="product_house[address]" />
-    <input type="text" name="product_house[housenumber]" />
+    <div ng-repeat="field in product_fields">
+        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
+    </div>
 </form>
 

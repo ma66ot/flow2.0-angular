@@ -20,7 +20,7 @@ phonecatControllers.controller('MainCtrl',
             var selection = json_submit_builder.get_cookie();
 
             $scope.main_model = {'products': products, 'selection': selection};
-            
+
             $scope.change_step = function(step) {
                 if ($scope.main_model.curr_step != 0) {
                     $scope.main_model.selection[$scope.main_model.curr_step].data = json_submit_builder.build();
@@ -35,6 +35,7 @@ phonecatControllers.controller('MainCtrl',
                         $location.path('/receipt');
                     }
                     else {
+                        //TODO: kaj se zgodi ce si na personal priso pa bi dodal se en produkt ali ce gres nazaj in dodas se en produkt
                         $scope.main_model.selection.push({'url': '/personal', 'order': 99, 'title': 'personal', 'img': '', 'data': null});
                         $location.path('/personal');
                         $scope.main_model.curr_step = $scope.main_model.curr_step + step;
@@ -80,7 +81,7 @@ phonecatControllers.controller('ProductSelCtrl',
                 var flag = false;
                 for (var i = 0; i < $scope.main_model.selection.length; i++) {
                     if (product.url == $scope.main_model.selection[i].url) {
-                        flag = true;  
+                        flag = true;
                     }
                 }
                 if (product.url == $location.path()) {
@@ -99,10 +100,9 @@ phonecatControllers.controller('ProductCtrl',
                 $scope.main_model.selection.push({'url': $location.path(), 'order': 0, 'title': 'special', 'img': 'img/icon4.png', 'data': null});
             }
             selection_check.check($scope.main_model.selection);
-
-            $scope.handle_form = function() {
-                alert("zaj pa si neke naredo");
-            }
+            
+            $scope.product_fields = [{"name":"product_accident[name]","value":""},{"name":"product_accident[surname]","value":""},{"name":"product_accident[address]","value":""},{"name":"product_accident[housenumber]","value":""}];
+            //TODO: naj prav nastavi curr_step ce gres po routu in ga refreshas
         });
 
 phonecatControllers.controller('PersonalCtrl',
@@ -114,7 +114,7 @@ phonecatControllers.controller('PersonalCtrl',
 
 phonecatControllers.controller('ReceiptCtrl',
         function($scope, $location, json_submit_builder) {
-            if ($scope.main_model.selection.length == 1) {
+            if ($scope.main_model.selection.length == 1 ) {
                 $location.path('/');
             }
             json_submit_builder.delete_cookie();

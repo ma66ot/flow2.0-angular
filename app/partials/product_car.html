@@ -1,8 +1,7 @@
 <!-- Car product template -->
 Car
 <form name="/product_car">
-    <input type="text" name="product_car[name]" value="{{main_model.selection[1].data[0].value}}"/>
-    <input type="text" name="product_car[surname]" />
-    <input type="text" name="product_car[address]" />
-    <input type="text" name="product_car[housenumber]" />
+    <div ng-repeat="field in product_fields">
+        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
+    </div>
 </form>

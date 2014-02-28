@@ -19,14 +19,7 @@
         <h2>Flow 2.0, Step: {{main_model.curr_step}}</h2>
         <div ng-include src="'partials/heading.html'"></div>
         <br />
-        <div class="contain" ng-controller="ProductSelCtrl">
-            <ul>
-                <li class="selection" ng-repeat="product in main_model.products| orderBy: product.order">
-                    <input type="checkbox" name="house" ng-click="add_remove(product, check_value);" ng-model="check_value" ng-init="check_value = check_state(product)"/>
-                    {{product.title}}
-                </li>
-            </ul>
-        </div>
+        <div ng-include src="'partials/selection.html'"></div>
         <div class="form">
             <div ng-view></div>
         </div>

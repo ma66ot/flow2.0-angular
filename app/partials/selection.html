@@ -1,0 +1,8 @@
+<div class="contain" ng-controller="ProductSelCtrl">
+    <ul>
+        <li class="selection" ng-repeat="product in main_model.products| orderBy: product.order">
+            <input type="checkbox" name="house" ng-click="add_remove(product, check_value);" ng-model="check_value" ng-init="check_value = check_state(product)"/>
+            {{product.title}}
+        </li>
+    </ul>
+</div>

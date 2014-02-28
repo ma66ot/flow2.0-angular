@@ -1,8 +1,7 @@
 <!-- Accident product template -->
 Accident
 <form name="/product_accident">
-    <input type="text" name="product_accident[name]" />
-    <input type="text" name="product_accident[surname]" />
-    <input type="text" name="product_accident[address]" />
-    <input type="text" name="product_accident[housenumber]" />
+    <div ng-repeat="field in product_fields">
+        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
+    </div>
 </form>

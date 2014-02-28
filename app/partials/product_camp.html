@@ -1,8 +1,7 @@
 <!-- Camp product template -->
 Camp
 <form name="/product_camp">
-    <input type="text" name="product_camp[name]" />
-    <input type="text" name="product_camp[surname]" />
-    <input type="text" name="product_camp[address]" />
-    <input type="text" name="product_camp[housenumber]" />
+    <div ng-repeat="field in product_fields">
+        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
+    </div>
 </form>

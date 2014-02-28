@@ -47,7 +47,7 @@ helpServices.factory('json_submit_builder', function($location, $cookies, $local
             time = time / 1000;
             var data = [{'url': '/', 'order': 0, 'title': 'Selection', 'img': 'img/icon1.png', 'data': null}];
             if (typeof $localStorage.iforsikring_dk_flow20 != 'undefined') {
-                if (time - 60 < $localStorage.iforsikring_dk_flow20.timestamp)
+                if (time - 1000 < $localStorage.iforsikring_dk_flow20.timestamp)
                     data = $localStorage.iforsikring_dk_flow20.data;
             }
             return data;

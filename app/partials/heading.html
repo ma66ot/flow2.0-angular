@@ -19,11 +19,11 @@
             </div>
         </li>
         <li class="step03">
-            <span ng-if="main_model.curr_step == main_model.selection.length" class="selected">Personal</span>
-            <span ng-if="main_model.curr_step < main_model.selection.length">Personal</span>
+            <span ng-if="main_model.selection[main_model.curr_step].title == 'personal'" class="selected">Personal</span>
+            <span ng-if="main_model.selection[main_model.curr_step].title != 'personal'">Personal</span>
         </li>
         <li class="step04">
-            <span ng-if="main_model.curr_step > main_model.selection.length" class="selected">Receipt</span>
+            <span ng-if="" class="selected">Receipt</span>
             <span ng-if="main_model.curr_step <= main_model.selection.length">Receipt</span>
         </li>
     </ul>

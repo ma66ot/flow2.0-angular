@@ -1,8 +1,7 @@
 <!-- Travel product template -->
 Travel
 <form name="/product_travel">
-    <input type="text" name="product_travel[name]" />
-    <input type="text" name="product_travel[surname]" />
-    <input type="text" name="product_travel[address]" />
-    <input type="text" name="product_travel[housenumber]" />
+    <div ng-repeat="field in product_fields">
+        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
+    </div>
 </form>
