@@ -45,6 +45,7 @@ phonecatControllers.controller('MainCtrl',
                     alert("You are at the end or you can't go more back...");
                 }
             }
+            
         });
 
 //selection controller
@@ -54,7 +55,12 @@ phonecatControllers.controller('ProductSelCtrl',
             $scope.add_remove = function(product, action) {
                 if (action == false) {
                     //if added new product to selection
-                    $scope.main_model.selection.push(product);
+                    if($scope.main_model.selection[$scope.main_model.selection.length -1].url == '/personal'){
+                        $scope.main_model.selection.splice($scope.main_model.selection.length -1,0,product);
+                    }
+                    else{
+                        $scope.main_model.selection.push(product);
+                    }
                     if ($scope.main_model.curr_step == 0) {
                         order_sort.sort($scope.main_model.selection);
                     }
