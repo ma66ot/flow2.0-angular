@@ -1,6 +1,6 @@
 <!-- Camp product template -->
 Camp
-<form name="/product_camp">
+<form name="product_camp">
     <div ng-repeat="field in product_fields">
         <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
     </div>

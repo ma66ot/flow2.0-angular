@@ -27,7 +27,8 @@ helpServices.factory('json_submit_builder', function($location, $cookies, $local
     return {
         build: function() {
             //console.log($location.path());
-            var form = document.forms[$location.path()].elements;
+            var form_name = $location.path().replace("/","");
+            var form = document.forms[form_name].elements;
             var array = $(form).serializeArray();
             return array;
         },

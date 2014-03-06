@@ -13,6 +13,7 @@
         <script src="js/app.js"></script>
         <script src="js/controllers.js"></script>
         <script src="js/services.js"></script>
+        <script src="js/validation.js"></script>
     </head>
     <body ng-controller="MainCtrl" ng-model="main_model">
         <h2>Flow 2.0, Step: {{main_model.curr_step}}</h2>
@@ -24,6 +25,9 @@
         </div>
         <br style="clear:both;"/>
         <br />
-        <a href="javascript: void(0)" ng-click="change_step(-1);">Prev step</a><a href="javascript: void(0)" ng-click="change_step(1);">Next step</a> <br />
+        <a href="javascript: void(0)" ng-click="change_step(-1);">Prev step</a><a href="javascript: void(0)" ng-click="change_step(1);">Next step</a>
+        <br />
+        <br />
+        <br />
     </body>
 </html>

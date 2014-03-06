@@ -5,9 +5,9 @@
 var phonecatApp = angular.module('phonecatApp', [
     'ngRoute',
     'phonecatControllers',
-    'helpServices',
     'ngCookies',
-    'ngStorage'
+    'ngStorage',
+    'validation'
 ]);
 
 phonecatApp.config(['$routeProvider',

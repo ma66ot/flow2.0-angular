@@ -1,7 +1,17 @@
 <!-- Accident product template -->
 Accident
-<form name="/product_accident">
-    <div ng-repeat="field in product_fields">
-        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
-    </div>
+<form name="product_accident">
+    
+        <input type="text" name="ime" value="" ng-model="ime" class="integer" />
+        <span ng-show="product_accident.$error.ime">Ne</span>
+        
+        <input type="text" name="priimek" value="" ng-model="priimek" integer />
+        <span ng-show="product_accident.$error.priimek">Ne</span>
+        
+        <input type="text" name="rojstvo" value="" ng-model="rojstvo" integer />
+        <span ng-show="product_accident.$error.rojstvo">Ne</span>
+        
+        <input type="text" name="naslov" value="" ng-model="naslov" integer />
+        <span ng-show="product_accident.$error.naslov">Ne</span>
+    
 </form>

@@ -9,13 +9,14 @@ var phonecatControllers = angular.module('phonecatControllers', [
 //main form controller for whole scope
 phonecatControllers.controller('MainCtrl',
         function($scope, $location, $localStorage, json_submit_builder) {
+
             var products = [
-                {'url': '/product_accident', 'order': 1, 'title': 'Accident', 'img': 'img/icon1.png', 'data': null},
-                {'url': '/product_camp', 'order': 2, 'title': 'Camp', 'img': 'img/icon2.png', 'data': null},
-                {'url': '/product_car', 'order': 3, 'title': 'Car', 'img': 'img/icon3.png', 'data': null},
-                {'url': '/product_house', 'order': 4, 'title': 'House', 'img': 'img/icon4.png', 'data': null},
-                {'url': '/product_pet', 'order': 5, 'title': 'Pet', 'img': 'img/icon5.png', 'data': null},
-                {'url': '/product_travel', 'order': 6, 'title': 'Travel', 'img': 'img/icon6.png', 'data': null}
+                {'url': 'product_accident', 'order': 1, 'title': 'Accident', 'img': 'img/icon1.png', 'data': null},
+                {'url': 'product_camp', 'order': 2, 'title': 'Camp', 'img': 'img/icon2.png', 'data': null},
+                {'url': 'product_car', 'order': 3, 'title': 'Car', 'img': 'img/icon3.png', 'data': null},
+                {'url': 'product_house', 'order': 4, 'title': 'House', 'img': 'img/icon4.png', 'data': null},
+                {'url': 'product_pet', 'order': 5, 'title': 'Pet', 'img': 'img/icon5.png', 'data': null},
+                {'url': 'product_travel', 'order': 6, 'title': 'Travel', 'img': 'img/icon6.png', 'data': null}
             ];
             var selection = json_submit_builder.get_cookie();
 
@@ -27,7 +28,7 @@ phonecatControllers.controller('MainCtrl',
                     json_submit_builder.set_cookie($scope.main_model.selection);
                 }
                 if ($scope.main_model.selection[$scope.main_model.curr_step + step] != null) {
-                    $location.path($scope.main_model.selection[$scope.main_model.curr_step + step].url);
+                    $location.path('/'+$scope.main_model.selection[$scope.main_model.curr_step + step].url);
                     $scope.main_model.curr_step = $scope.main_model.curr_step + step;
                 }
                 else if ($scope.main_model.selection.length > 1 && step == 1) {
@@ -44,8 +45,8 @@ phonecatControllers.controller('MainCtrl',
                 else {
                     alert("You are at the end or you can't go more back...");
                 }
-            }
-            
+            };
+
         });
 
 //selection controller
@@ -55,10 +56,10 @@ phonecatControllers.controller('ProductSelCtrl',
             $scope.add_remove = function(product, action) {
                 if (action == false) {
                     //if added new product to selection
-                    if($scope.main_model.selection[$scope.main_model.selection.length -1].url == '/personal'){
-                        $scope.main_model.selection.splice($scope.main_model.selection.length -1,0,product);
+                    if ($scope.main_model.selection[$scope.main_model.selection.length - 1].url == '/personal') {
+                        $scope.main_model.selection.splice($scope.main_model.selection.length - 1, 0, product);
                     }
-                    else{
+                    else {
                         $scope.main_model.selection.push(product);
                     }
                     if ($scope.main_model.curr_step == 0) {
@@ -69,7 +70,7 @@ phonecatControllers.controller('ProductSelCtrl',
                     //if removed product from selection
                     for (var i = 0; i < $scope.main_model.selection.length; i++) {
                         if ($scope.main_model.selection[i].url == product.url) {
-                            if ($location.path() != product.url) {
+                            if ($location.path() != '/'+product.url) {
                                 $scope.main_model.selection.splice(i, 1);
                             }
                             else {
@@ -81,16 +82,16 @@ phonecatControllers.controller('ProductSelCtrl',
                         }
                     }
                 }
-            }
+            };
 
             $scope.check_state = function(product) {
                 var flag = false;
                 for (var i = 0; i < $scope.main_model.selection.length; i++) {
-                    if (product.url == $scope.main_model.selection[i].url) {
+                    if ('/'+product.url == $scope.main_model.selection[i].url) {
                         flag = true;
                     }
                 }
-                if (product.url == $location.path()) {
+                if ('/'+product.url == $location.path()) {
                     flag = true;
                 }
                 return flag;
@@ -103,11 +104,12 @@ phonecatControllers.controller('ProductCtrl',
                 $scope.main_model.curr_step++;
             }
             if ($scope.main_model.selection.length == 1) {
-                $scope.main_model.selection.push({'url': $location.path(), 'order': 0, 'title': 'special', 'img': 'img/icon4.png', 'data': null});
+                var name = $location.path().replace("/","");
+                $scope.main_model.selection.push({'url': name, 'order': 0, 'title': 'special', 'img': 'img/icon4.png', 'data': null});
             }
             selection_check.check($scope.main_model.selection);
-            
-            $scope.product_fields = [{"name":"product_accident[name]","value":""},{"name":"product_accident[surname]","value":""},{"name":"product_accident[address]","value":""},{"name":"product_accident[housenumber]","value":""}];
+
+            $scope.product_fields = [{"name": "product_accident[name]", "value": "", "text":"not ok"}, {"name": "product_accident[surname]", "value": "", "text":"not ok"}, {"name": "product_accident[address]", "value": "", "text":"not ok"}, {"name": "product_accident[housenumber]", "value": "", "text":"not ok"}];
             //TODO: naj prav nastavi curr_step ce gres po routu in ga refreshas
         });
 
@@ -120,7 +122,7 @@ phonecatControllers.controller('PersonalCtrl',
 
 phonecatControllers.controller('ReceiptCtrl',
         function($scope, $location, json_submit_builder) {
-            if ($scope.main_model.selection.length == 1 ) {
+            if ($scope.main_model.selection.length == 1) {
                 $location.path('/');
             }
             json_submit_builder.delete_cookie();
