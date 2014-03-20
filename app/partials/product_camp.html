@@ -1,7 +1,17 @@
 <!-- Camp product template -->
 Camp
 <form name="product_camp">
-    <div ng-repeat="field in product_fields">
-        <input type="text" name="{{field.name}}" value="{{main_model.selection[main_model.curr_step].data[$index].value}}" />
+    <div>
+        <input type="text" name="product_accident" ng-model="product_accident" value="" class="integer">
+        <span ng-show="product_camp.$error.product_accident">Ne</span>
+    </div>
+    <div>
+        <input type="text" name="product_accident[surname]" value="">
+    </div>
+    <div>
+        <input type="text" name="product_accident[address]" value="">
+    </div>
+    <div>
+        <input type="text" name="product_accident[housenumber]" value="">
     </div>
 </form>

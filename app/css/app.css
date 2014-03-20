@@ -48,3 +48,6 @@ body {
 .heading li .selected{
     background-color: #57a957;
 }
+input.cap {
+    text-transform: capitalize;
+}

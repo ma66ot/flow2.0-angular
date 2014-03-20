@@ -1,0 +1,13 @@
+.steps-bar .active,
+#wrapper .btn-default {background:#e9cc00 url(../images/bg-btn-01.gif) repeat-x;}
+.steps-bar,
+#wrapper .btn-default:hover {background:#ececec url(../images/bg-btn-02.gif) repeat-x;}
+.info-section .box .frame {box-shadow:0 1px 1px #ddd;}
+.add-nav,
+#sidebar .ad,
+.ads .box,
+.newsletter {box-shadow:0 1px 1px #ddd;}
+.select-area {background:#fff;}
+.steps-form .ico.inactive {filter: alpha(opacity=50);}
+.steps-form .slides-02 .handle,
+.steps-form .slides-01 .handle {background: #8fbf35;}

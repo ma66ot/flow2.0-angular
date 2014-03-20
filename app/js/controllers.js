@@ -23,12 +23,16 @@ phonecatControllers.controller('MainCtrl',
             $scope.main_model = {'products': products, 'selection': selection};
 
             $scope.change_step = function(step) {
+                setTimeout(function() {
+                    $('input').focus().blur();
+                }, 1);
+
                 if ($scope.main_model.curr_step != 0) {
                     $scope.main_model.selection[$scope.main_model.curr_step].data = json_submit_builder.build();
                     json_submit_builder.set_cookie($scope.main_model.selection);
                 }
                 if ($scope.main_model.selection[$scope.main_model.curr_step + step] != null) {
-                    $location.path('/'+$scope.main_model.selection[$scope.main_model.curr_step + step].url);
+                    $location.path('/' + $scope.main_model.selection[$scope.main_model.curr_step + step].url);
                     $scope.main_model.curr_step = $scope.main_model.curr_step + step;
                 }
                 else if ($scope.main_model.selection.length > 1 && step == 1) {
@@ -36,8 +40,7 @@ phonecatControllers.controller('MainCtrl',
                         $location.path('/receipt');
                     }
                     else {
-                        //TODO: kaj se zgodi ce si na personal priso pa bi dodal se en produkt ali ce gres nazaj in dodas se en produkt
-                        $scope.main_model.selection.push({'url': '/personal', 'order': 99, 'title': 'personal', 'img': '', 'data': null});
+                        $scope.main_model.selection.push({'url': 'personal', 'order': 99, 'title': 'personal', 'img': '', 'data': null});
                         $location.path('/personal');
                         $scope.main_model.curr_step = $scope.main_model.curr_step + step;
                     }
@@ -45,6 +48,7 @@ phonecatControllers.controller('MainCtrl',
                 else {
                     alert("You are at the end or you can't go more back...");
                 }
+
             };
 
         });
@@ -56,7 +60,7 @@ phonecatControllers.controller('ProductSelCtrl',
             $scope.add_remove = function(product, action) {
                 if (action == false) {
                     //if added new product to selection
-                    if ($scope.main_model.selection[$scope.main_model.selection.length - 1].url == '/personal') {
+                    if ($scope.main_model.selection[$scope.main_model.selection.length - 1].url == 'personal') {
                         $scope.main_model.selection.splice($scope.main_model.selection.length - 1, 0, product);
                     }
                     else {
@@ -65,51 +69,57 @@ phonecatControllers.controller('ProductSelCtrl',
                     if ($scope.main_model.curr_step == 0) {
                         order_sort.sort($scope.main_model.selection);
                     }
+                    return true;
                 }
-                else {
+                else if (action == true) {
                     //if removed product from selection
                     for (var i = 0; i < $scope.main_model.selection.length; i++) {
                         if ($scope.main_model.selection[i].url == product.url) {
-                            if ($location.path() != '/'+product.url) {
-                                $scope.main_model.selection.splice(i, 1);
-                            }
-                            else {
-                                //TODO: kaj se zgodi ce hoce zbrisat trenutn korak v formi?
-                            }
-                            if (i < $scope.main_model.curr_step) {
+                            $scope.main_model.selection.splice(i, 1);
+                            if (i <= $scope.main_model.curr_step) {
                                 $scope.main_model.curr_step--;
+                            }
+                            //kak zaj handlat ko se zbrise vn isti kaj si gor na njem in kak se pol dogaja
+                            if ($location.path() == '/' + product.url) {
+                                $location.path('/' + $scope.main_model.selection[i - 1].url);
+                                //return true;
                             }
                         }
                     }
                 }
             };
-
             $scope.check_state = function(product) {
                 var flag = false;
+                //console.debug($scope.main_model.selection);
                 for (var i = 0; i < $scope.main_model.selection.length; i++) {
-                    if ('/'+product.url == $scope.main_model.selection[i].url) {
+                    if (product.url == $scope.main_model.selection[i].url) {
                         flag = true;
                     }
-                }
-                if ('/'+product.url == $location.path()) {
-                    flag = true;
                 }
                 return flag;
             }
         });
 
 phonecatControllers.controller('ProductCtrl',
-        function($scope, $location, selection_check) {
+        function($scope, $location) {
             if ($scope.main_model.curr_step == 0) {
                 $scope.main_model.curr_step++;
             }
             if ($scope.main_model.selection.length == 1) {
-                var name = $location.path().replace("/","");
+                var name = $location.path().replace("/", "");
                 $scope.main_model.selection.push({'url': name, 'order': 0, 'title': 'special', 'img': 'img/icon4.png', 'data': null});
             }
-            selection_check.check($scope.main_model.selection);
+            else if ($scope.main_model.selection.length > 1) {
+                var name2 = $location.path().replace("/", "");
+                for (var i = 0; i < $scope.main_model.selection.length; i++) {
+                    if ($scope.main_model.selection[i].url == name2) {
+                        $scope.main_model.curr_step = i;
+                    }
+                }
+            }
+            //selection_check.check($scope.main_model.selection);
 
-            $scope.product_fields = [{"name": "product_accident[name]", "value": "", "text":"not ok"}, {"name": "product_accident[surname]", "value": "", "text":"not ok"}, {"name": "product_accident[address]", "value": "", "text":"not ok"}, {"name": "product_accident[housenumber]", "value": "", "text":"not ok"}];
+            //$scope.product_fields = [{"name": "product_accident[name]", "value": "", "text":"not ok"}, {"name": "product_accident[surname]", "value": "", "text":"not ok"}, {"name": "product_accident[address]", "value": "", "text":"not ok"}, {"name": "product_accident[housenumber]", "value": "", "text":"not ok"}];
             //TODO: naj prav nastavi curr_step ce gres po routu in ga refreshas
         });
 
