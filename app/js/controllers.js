@@ -23,32 +23,36 @@ phonecatControllers.controller('MainCtrl',
             $scope.main_model = {'products': products, 'selection': selection};
 
             $scope.change_step = function(step) {
-                setTimeout(function() {
-                    $('input').focus().blur();
-                }, 1);
-
-                if ($scope.main_model.curr_step != 0) {
-                    $scope.main_model.selection[$scope.main_model.curr_step].data = json_submit_builder.build();
-                    json_submit_builder.set_cookie($scope.main_model.selection);
-                }
-                if ($scope.main_model.selection[$scope.main_model.curr_step + step] != null) {
-                    $location.path('/' + $scope.main_model.selection[$scope.main_model.curr_step + step].url);
-                    $scope.main_model.curr_step = $scope.main_model.curr_step + step;
-                }
-                else if ($scope.main_model.selection.length > 1 && step == 1) {
-                    if ($location.path() == '/personal') {
-                        $location.path('/receipt');
+                var curr_form = $location.path().replace("/","");
+                console.log();
+                if(1 == 1){
+                    if ($scope.main_model.curr_step != 0) {
+                        $scope.main_model.selection[$scope.main_model.curr_step].data = json_submit_builder.build();
+                        json_submit_builder.set_cookie($scope.main_model.selection);
                     }
-                    else {
-                        $scope.main_model.selection.push({'url': 'personal', 'order': 99, 'title': 'personal', 'img': '', 'data': null});
-                        $location.path('/personal');
+                    if ($scope.main_model.selection[$scope.main_model.curr_step + step] != null) {
+                        $location.path('/' + $scope.main_model.selection[$scope.main_model.curr_step + step].url);
                         $scope.main_model.curr_step = $scope.main_model.curr_step + step;
                     }
+                    else if ($scope.main_model.selection.length > 1 && step == 1) {
+                        if ($location.path() == '/personal') {
+                            $location.path('/receipt');
+                        }
+                        else {
+                            $scope.main_model.selection.push({'url': 'personal', 'order': 99, 'title': 'personal', 'img': '', 'data': null});
+                            $location.path('/personal');
+                            $scope.main_model.curr_step = $scope.main_model.curr_step + step;
+                        }
+                    }
+                    else {
+                        alert("You are at the end or you can't go more back...");
+                    }
                 }
-                else {
-                    alert("You are at the end or you can't go more back...");
+                else{
+                    setTimeout(function(){
+                        $('input').focus().blur();
+                    },1);
                 }
-
             };
 
         });
@@ -105,6 +109,7 @@ phonecatControllers.controller('ProductCtrl',
             if ($scope.main_model.curr_step == 0) {
                 $scope.main_model.curr_step++;
             }
+            
             if ($scope.main_model.selection.length == 1) {
                 var name = $location.path().replace("/", "");
                 $scope.main_model.selection.push({'url': name, 'order': 0, 'title': 'special', 'img': 'img/icon4.png', 'data': null});
@@ -117,10 +122,6 @@ phonecatControllers.controller('ProductCtrl',
                     }
                 }
             }
-            //selection_check.check($scope.main_model.selection);
-
-            //$scope.product_fields = [{"name": "product_accident[name]", "value": "", "text":"not ok"}, {"name": "product_accident[surname]", "value": "", "text":"not ok"}, {"name": "product_accident[address]", "value": "", "text":"not ok"}, {"name": "product_accident[housenumber]", "value": "", "text":"not ok"}];
-            //TODO: naj prav nastavi curr_step ce gres po routu in ga refreshas
         });
 
 phonecatControllers.controller('PersonalCtrl',

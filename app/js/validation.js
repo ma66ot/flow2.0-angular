@@ -13,7 +13,7 @@ var validation = angular.module('validation', []);
  * 
  */
 validation.controller('validationRules', function($scope, $http) {
-    $scope.step_valid = false;
+    $scope.form_valid = false;
     $scope.validationRules = {
         "required":{
             "regex" : null,
@@ -36,12 +36,12 @@ validation.controller('validationRules', function($scope, $http) {
 });
 
 //connected on blur event directive
-validation.directive('validate', function() {
+validation.directive('validate', function($location) {
     return {
             restrict: 'AC',
             require: 'ngModel',
             template: 'kaka',
-            link: function(scope, element, attrs, ngModel, ngModeCtrl) {
+            link: function(scope, element, attrs, ngModel, location) {
                 ngModel.$error = null;
                 
                 element.bind('blur', function () {
@@ -65,15 +65,15 @@ validation.directive('validate', function() {
                         }
                     }
                     if(error_msg.length !== 0){
-                        
                         scope.$apply(function(){
                              ngModel.$error = error_msg;
+                             ngModel.$setValidity('form',false);
                         });
                     }
                     else{
                         scope.$apply(function(){
                              ngModel.$error = null;
-                             scope.step_valid = true;
+                             ngModel.$setValidity('form',true);
                         });
                     }
                 });
