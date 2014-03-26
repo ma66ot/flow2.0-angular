@@ -1,17 +1,17 @@
 <!-- Camp product template -->
 Camp
-<form name="product_camp">
-    <div>
-        <input type="text" name="product_accident" ng-model="product_accident" value="" class="integer">
-        <span ng-show="product_camp.$error.product_accident">Ne</span>
+<form name="product_camp" ng-model="product_camp" ng-controller="validationRules">
+
+    <input type="text" name="naslov" placeholder="Email" value="" ng-model="naslov" validate="required" />
+    <div ng-if="product_camp.naslov.$error != null">
+        <p ng-repeat="error in product_camp.naslov.$error">{{error}}</p>
     </div>
-    <div>
-        <input type="text" name="product_accident[surname]" value="">
-    </div>
-    <div>
-        <input type="text" name="product_accident[address]" value="">
-    </div>
-    <div>
-        <input type="text" name="product_accident[housenumber]" value="">
-    </div>
+    <br />
+    validated: {{main_model.validated}}
+    <br />
+    validfrom: {{product_camp.$valid}}
+    <br />
+    pristing: {{product_camp.$pristine}}
+    <br />
+    dirty: {{product_camp.$dirty}}
 </form>

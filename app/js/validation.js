@@ -12,25 +12,34 @@ var validation = angular.module('validation', []);
  * 
  * 
  */
-validation.controller('validationRules', function($scope, $http) {
-    $scope.form_valid = false;
+validation.controller('validationRules', function($scope, $http, $location) {
+    //console.log($scope.product_accident.$valid+"?");
     $scope.validationRules = {
-        "required":{
-            "regex" : null,
-            "msg" : "You have to enter at least something",
-            fun : function(param, $scope){
-                if(param !== "" && param !== undefined){
+        "required": {
+            msg2 : function(){
+                return true;
+            },
+            "regex": null,
+            "msg": "You have to enter at least something",
+            fun: function(param, $scope) {
+                if (param !== "" && param !== undefined) {
                     return true;
                 }
             }
         },
-        "email":{
-            "regex" : /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            "msg" : "You have to enter the whole email.",
+        "email": {
+            msg2 : function(){
+                return true;
+            },
+            "regex": /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            "msg": "You have to enter the whole email.",
         },
-        "fullname":{
-            "regex" : /^\s*\S+\s+\S+(\s*\S)*\s*$/,
-            "msg" : "You have to enter the whole name.",
+        "fullname": {
+            msg2 : function(){
+                return true;
+            },
+            "regex": /^\s*\S+\s+\S+(\s*\S)*\s*$/,
+            "msg": "You have to enter the whole name.",
         }
     };
 });
@@ -38,45 +47,54 @@ validation.controller('validationRules', function($scope, $http) {
 //connected on blur event directive
 validation.directive('validate', function($location) {
     return {
-            restrict: 'AC',
-            require: 'ngModel',
-            template: 'kaka',
-            link: function(scope, element, attrs, ngModel, location) {
-                ngModel.$error = null;
+        restrict: 'AC',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModel) {
+            ngModel.$error = null;
+            var curr_form = $location.path().replace("/", "");
+            ngModel.$setValidity('form', false);
+            
+            element.bind('blur', function() {
+                var error_msg = new Array();
+                var validation_a = attrs.validate.replace(" ", "").split(",");
                 
-                element.bind('blur', function () {
-                    var error_msg = new Array();
-                    var validation_a = attrs.validate.replace(" ","").split(",");
-                    
-                    for(var i = 0; i < validation_a.length; i++){
-                        var rule = scope.validationRules[validation_a[i]];
-                        if(rule !== undefined && rule.regex === null){
-                            if(!rule.fun(ngModel.$viewValue)){
-                                error_msg.push(rule.msg);
-                            }
-                        }
-                        else if(rule !== undefined && rule.regex !== null){
-                            if(!rule.regex.test(ngModel.$viewValue)){
-                                error_msg.push(rule.msg);
-                            }
-                        }
-                        else{
-                            alert("You are trying to use a nonexistent validation rule!");
+                for (var i = 0; i < validation_a.length; i++) {
+                    var rule = scope.validationRules[validation_a[i]];
+                    if (rule !== undefined && rule.regex === null) {
+                        if (!rule.fun(ngModel.$viewValue)) {
+                            error_msg.push(rule.msg);
                         }
                     }
-                    if(error_msg.length !== 0){
-                        scope.$apply(function(){
-                             ngModel.$error = error_msg;
-                             ngModel.$setValidity('form',false);
-                        });
+                    else if (rule !== undefined && rule.regex !== null) {
+                        if (!rule.regex.test(ngModel.$viewValue)) {
+                            error_msg.push(rule.msg);
+                        }
                     }
-                    else{
-                        scope.$apply(function(){
-                             ngModel.$error = null;
-                             ngModel.$setValidity('form',true);
-                        });
+                    else {
+                        alert("You are trying to use a nonexistent validation rule!");
                     }
-                });
-            }
-        };
+                }
+
+                if (error_msg.length !== 0) {
+                    scope.$apply(function() {
+                        ngModel.$error = error_msg;
+                        ngModel.$setValidity('form', false);
+                        scope.main_model.validated = scope[curr_form].$valid;
+                    });
+                }
+                else {
+                    scope.$apply(function() {
+                        ngModel.$error = null;
+                        ngModel.$setValidity('form', true);
+                        scope.main_model.validated = scope[curr_form].$valid;
+                    });
+                }
+                
+            });
+        },
+        controller: function($scope, $element, $attrs) {
+            //var curr_form = $location.path().replace("/", "");
+            $scope.main_model.validated = false;
+        }
+    };
 });

@@ -17,25 +17,22 @@
                     <div class="container">
                         <div id="main" class="ie-fix">
                             <div class="steps-form">
-                                <form action="#">
-                                    <fieldset>
-                                        <section class="section">
-                                            <h2>Choose Your <strong>Insurance Type</strong></h2>
-                                            <div class="choose-area">
-                                                <div class="col">
-                                                    <div ng-include src="'partials/selection.html'"></div>
-                                                </div><!-- col -->
-                                            </div><!-- choose-area -->
-                                        </section><!-- section -->
-                                        <div class="bottom-area clearfix">
-                                            <a href="javascript: void(0)" class="btn btn-default" ng-click="change_step(1);
-                                                pik();"><span>NEXT / CONTINUE</span></a>
-                                            <a href="javascript: void(0)" class="btn btn-default back" ng-click="change_step(-1);"><span>GO BACK</span></a>
-                                        </div><!-- bottom-area -->
-                                    </fieldset>
-                                </form>
+                                <fieldset>
+                                    <section class="section">
+                                        <h2>Choose Your <strong>Insurance Type</strong></h2>
+                                        <div class="choose-area">
+                                            <div class="col">
+                                                <div ng-include src="'partials/selection.html'"></div>
+                                            </div><!-- col -->
+                                        </div><!-- choose-area -->
+                                    </section><!-- section -->
+                                    <div class="bottom-area clearfix">
+                                        <a id="kaka" href="javascript: void(0)" class="btn btn-default" ng-click="change_step(1);"><span>NEXT / CONTINUE</span></a>
+                                        <a href="javascript: void(0)" class="btn btn-default back" ng-click="change_step(-1);"><span>GO BACK</span></a>
+                                    </div><!-- bottom-area -->
+                                </fieldset>
                             </div><!-- steps-form -->
-                            
+
                             <div class="steps-form" ng-view></div>
                             <img src="images/shadow-13.gif" width="282" height="234" alt="#" class="shadow-lt">
                             <img src="images/shadow-14.gif" width="273" height="234" alt="#" class="shadow-rt">
@@ -77,6 +74,5 @@
         <script src="js/controllers.js"></script>
         <script src="js/services.js"></script>
         <script src="js/validation.js"></script>
-
     </body>
 </html>

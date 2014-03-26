@@ -1,23 +1,28 @@
 <!-- Accident product template -->
 Accident
 <form name="product_accident" ng-model="product_accident" ng-controller="validationRules">
-    
-        <input type="text" name="ime" value="" ng-model="ime" class="cap"/>
-        <span ng-show="product_accident.$error.ime">Ne</span>
-        
-        <input type="text" name="priimek" value="" ng-model="priimek"/>
-        <span ng-show="product_accident.$error.priimek">Ne</span>
-        
-        <input type="text" name="rojstvo" placeholder="Name" value="" ng-model="rojstvo" validate="required"/>
-        <div ng-if="product_accident.rojstvo.$error != null">
-            <p ng-repeat="error in product_accident.rojstvo.$error">{{error}}</p>
-        </div>
-        
-        <input id="kiki" type="text" name="naslov" placeholder="Email" value="" ng-model="naslov" validate="required, email" />
-        <div ng-if="product_accident.naslov.$error != null">
-            <p ng-repeat="error in product_accident.naslov.$error">{{error}}</p>
-        </div>
-        <br />
-        <br />
+
+    <input type="text" name="rojstvo" ng-model="rojstvo" ng-init="rojstvo = main_model.selection[main_model.curr_step].data[0]['value']" validate="required, email"/>
+    <div ng-if="product_accident.rojstvo.$error != null">
+        <p ng-repeat="error in product_accident.rojstvo.$error">{{error}}</p>
+    </div>
+    <br />
+    <input type="text" name="naslov" ng-model="naslov" ng-init="naslov = main_model.selection[main_model.curr_step].data[1]['value']" validate="required"/>
+    <div ng-if="product_accident.naslov.$error != null">
+        <p ng-repeat="error in product_accident.naslov.$error">{{error}}</p>
+    </div>
+    <br />
+    <input type="text" name="kaj" ng-model="kaj" ng-init="kaj = main_model.selection[main_model.curr_step].data[2]['value']"/>
+    <div ng-if="product_accident.kaj.$error != null">
+        <p ng-repeat="error in product_accident.kaj.$error">{{error}}</p>
+    </div>
+    <br />
+    validated: {{main_model.validated}}
+    <br />
+    validfrom: {{product_accident.$valid}}
+    <br />
+    pristing: {{product_accident.$pristine}}
+    <br />
+    dirty: {{product_accident.$dirty}}
 </form>
 

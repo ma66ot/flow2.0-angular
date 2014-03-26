@@ -23,7 +23,7 @@ helpServices.factory('selection_check', function() {
     }
 });
 
-helpServices.factory('json_submit_builder', function($location, $cookies, $localStorage) {
+helpServices.factory('json_submit_builder', function($location, $localStorage) {
     return {
         build: function() {
             //console.log($location.path());

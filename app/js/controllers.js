@@ -8,8 +8,8 @@ var phonecatControllers = angular.module('phonecatControllers', [
 
 //main form controller for whole scope
 phonecatControllers.controller('MainCtrl',
-        function($scope, $location, $localStorage, json_submit_builder) {
-
+        function($scope, $location, $localStorage, $timeout, json_submit_builder) {
+            //$scope.validated = "kaj";
             var products = [
                 {'url': 'product_accident', 'order': 1, 'title': 'Accident', 'img': 'img/icon1.png', 'data': null},
                 {'url': 'product_camp', 'order': 2, 'title': 'Camp', 'img': 'img/icon2.png', 'data': null},
@@ -20,19 +20,23 @@ phonecatControllers.controller('MainCtrl',
             ];
             var selection = json_submit_builder.get_cookie();
 
-            $scope.main_model = {'products': products, 'selection': selection};
+            $scope.main_model = {'products': products, 'selection': selection, 'validated': true};
 
             $scope.change_step = function(step) {
-                var curr_form = $location.path().replace("/","");
-                console.log();
-                if(1 == 1){
+                setTimeout(function(){
+                    $('input[type="text"]').focus().blur();
+                });
+                if ($scope.main_model.validated || step < 0) {
+                    console.log("naprej");
                     if ($scope.main_model.curr_step != 0) {
                         $scope.main_model.selection[$scope.main_model.curr_step].data = json_submit_builder.build();
                         json_submit_builder.set_cookie($scope.main_model.selection);
                     }
                     if ($scope.main_model.selection[$scope.main_model.curr_step + step] != null) {
+
                         $location.path('/' + $scope.main_model.selection[$scope.main_model.curr_step + step].url);
                         $scope.main_model.curr_step = $scope.main_model.curr_step + step;
+
                     }
                     else if ($scope.main_model.selection.length > 1 && step == 1) {
                         if ($location.path() == '/personal') {
@@ -40,6 +44,7 @@ phonecatControllers.controller('MainCtrl',
                         }
                         else {
                             $scope.main_model.selection.push({'url': 'personal', 'order': 99, 'title': 'personal', 'img': '', 'data': null});
+
                             $location.path('/personal');
                             $scope.main_model.curr_step = $scope.main_model.curr_step + step;
                         }
@@ -48,19 +53,16 @@ phonecatControllers.controller('MainCtrl',
                         alert("You are at the end or you can't go more back...");
                     }
                 }
-                else{
-                    setTimeout(function(){
-                        $('input').focus().blur();
-                    },1);
-                }
             };
-
         });
 
 //selection controller
 phonecatControllers.controller('ProductSelCtrl',
         function($scope, order_sort, $location) {
+            $scope.main_model.validated = true;
             $scope.main_model.curr_step = 0;
+
+            //add remove to/from selected products
             $scope.add_remove = function(product, action) {
                 if (action == false) {
                     //if added new product to selection
@@ -92,6 +94,8 @@ phonecatControllers.controller('ProductSelCtrl',
                     }
                 }
             };
+
+            //check if product is selected
             $scope.check_state = function(product) {
                 var flag = false;
                 //console.debug($scope.main_model.selection);
@@ -109,7 +113,6 @@ phonecatControllers.controller('ProductCtrl',
             if ($scope.main_model.curr_step == 0) {
                 $scope.main_model.curr_step++;
             }
-            
             if ($scope.main_model.selection.length == 1) {
                 var name = $location.path().replace("/", "");
                 $scope.main_model.selection.push({'url': name, 'order': 0, 'title': 'special', 'img': 'img/icon4.png', 'data': null});
@@ -128,6 +131,9 @@ phonecatControllers.controller('PersonalCtrl',
         function($scope, $location) {
             if ($scope.main_model.selection.length == 1) {
                 $location.path('/');
+            }
+            else {
+                $scope.main_model.curr_step = $scope.main_model.selection.length - 1;
             }
         });
 
