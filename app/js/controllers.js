@@ -27,7 +27,7 @@ phonecatControllers.controller('MainCtrl',
                     $('input[type="text"]').focus().blur();
                 });
                 if ($scope.main_model.validated || step < 0) {
-                    console.log("naprej");
+                    //console.log("naprej");
                     if ($scope.main_model.curr_step != 0) {
                         $scope.main_model.selection[$scope.main_model.curr_step].data = json_submit_builder.build();
                         json_submit_builder.set_cookie($scope.main_model.selection);
